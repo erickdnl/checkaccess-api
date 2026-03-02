@@ -2,6 +2,8 @@ package com.zumr.checkacess_api.domain;
 
 import lombok.*;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -14,6 +16,6 @@ public class Review {
 
     private Integer rating;
     private String comment;
-    private User user;
-    private Place place;
+    private String userId;
+    private Instant createdAt;
 }
