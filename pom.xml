@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zumr</groupId>
-	<artifactId>checkacess-api</artifactId>
+	<artifactId>checkaccess-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>checkacess-api</name>
+	<name>checkaccess-api</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

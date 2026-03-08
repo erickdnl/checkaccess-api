@@ -1,6 +1,6 @@
-package com.zumr.checkacess_api.repository;
+package com.zumr.checkaccess_api.repository;
 
-import com.zumr.checkacess_api.domain.Place;
+import com.zumr.checkaccess_api.domain.Place;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PlaceRepository extends MongoRepository<Place, String> {

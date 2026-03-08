@@ -1,4 +1,4 @@
-package com.zumr.checkacess_api;
+package com.zumr.checkaccess_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
