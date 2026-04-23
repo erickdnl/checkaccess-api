@@ -1,4 +1,4 @@
-package com.zumr.checkaccess_api.dto;
+package com.zumr.checkaccess_api.review.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

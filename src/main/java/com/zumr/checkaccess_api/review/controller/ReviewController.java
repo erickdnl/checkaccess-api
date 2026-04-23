@@ -1,8 +1,7 @@
-package com.zumr.checkaccess_api.controller;
+package com.zumr.checkaccess_api.review.controller;
 
-import com.zumr.checkaccess_api.dto.PlaceReviewsResponseDTO;
-import com.zumr.checkaccess_api.dto.ReviewRequestDTO;
-import com.zumr.checkaccess_api.service.ReviewService;
+import com.zumr.checkaccess_api.review.dto.*;
+import com.zumr.checkaccess_api.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,12 +24,11 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createReview(
+    public ResponseEntity<ReviewResponseDTO> createReview(
             @PathVariable String placeId,
-            @Valid @RequestBody ReviewRequestDTO request){
+            @RequestBody ReviewRequestDTO request){
 
-        reviewService.createReview(placeId, request);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(reviewService.createReview(placeId, request));
     }
 }

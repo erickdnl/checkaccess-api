@@ -3,3 +3,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/checkaccess
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000

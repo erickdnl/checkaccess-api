@@ -1,4 +1,4 @@
-package com.zumr.checkaccess_api.dto;
+package com.zumr.checkaccess_api.review.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -7,9 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReviewRequestDTO {
-
-    @NotBlank(message = "userId é obrigatório")
-    private String userId;
 
     @NotNull(message = "rating é obrigatório")
     @Min(value = 1, message = "rating mínimo é 1")

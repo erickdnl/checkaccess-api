@@ -1,4 +1,4 @@
-package com.zumr.checkaccess_api.dto;
+package com.zumr.checkaccess_api.review.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,9 @@ import java.time.Instant;
 @AllArgsConstructor
 public class ReviewResponseDTO {
 
+    private String id;
+    private String placeId;
+    private String userId;
     private Integer rating;
     private String comment;
     private Instant createdAt;

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document(collection = "users")
 public class User {
 
