@@ -14,11 +14,11 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterRequestDTO dto){
+    public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO dto){
 
-        authService.register(dto);
+        String token = authService.register(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponseDTO(token));
     }
 
     @PostMapping("/login")

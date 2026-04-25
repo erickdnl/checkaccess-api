@@ -26,7 +26,7 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<ReviewResponseDTO> createReview(
             @PathVariable String placeId,
-            @RequestBody ReviewRequestDTO request){
+            @Valid @RequestBody ReviewRequestDTO request){
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reviewService.createReview(placeId, request));

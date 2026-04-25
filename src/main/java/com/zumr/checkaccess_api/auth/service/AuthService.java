@@ -17,7 +17,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public void register(RegisterRequestDTO dto){
+    public String register(RegisterRequestDTO dto){
 
         userRepository.findByEmail(dto.getEmail())
                 .ifPresent(user -> {
@@ -30,7 +30,9 @@ public class AuthService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .build();
 
-        userRepository.save(user);
+        User saved = userRepository.save(user);
+
+        return jwtService.generateToken(saved.getId());
     }
 
     public String login(LoginRequestDTO dto){

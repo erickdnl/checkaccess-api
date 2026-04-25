@@ -12,6 +12,7 @@ public class ReviewResponseDTO {
     private String id;
     private String placeId;
     private String userId;
+    private String userName;
     private Integer rating;
     private String comment;
     private Instant createdAt;

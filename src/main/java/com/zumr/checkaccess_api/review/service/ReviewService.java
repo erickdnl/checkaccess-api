@@ -1,9 +1,7 @@
 package com.zumr.checkaccess_api.review.service;
 
-import com.zumr.checkaccess_api.domain.Place;
-import com.zumr.checkaccess_api.domain.Review;
-import com.zumr.checkaccess_api.repository.PlaceRepository;
-import com.zumr.checkaccess_api.repository.ReviewRepository;
+import com.zumr.checkaccess_api.domain.*;
+import com.zumr.checkaccess_api.repository.*;
 import com.zumr.checkaccess_api.review.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,19 +16,13 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final PlaceRepository placeRepository;
+    private final UserRepository userRepository;
 
     public PlaceReviewsResponseDTO getReviewsByPlace(String placeId) {
 
         List<ReviewResponseDTO> reviews = reviewRepository.findByPlaceId(placeId)
                 .stream()
-                .map(review -> new ReviewResponseDTO(
-                        review.getId(),
-                        review.getPlaceId(),
-                        review.getUserId(),
-                        review.getRating(),
-                        review.getComment(),
-                        review.getCreatedAt()
-                ))
+                .map(this::toResponse)
                 .toList();
 
         String message = reviews.isEmpty() ? "Seja o primeiro a avaliar" : null;
@@ -59,13 +51,23 @@ public class ReviewService {
 
         Review saved = reviewRepository.save(review);
 
+        return toResponse(saved);
+    }
+
+    private ReviewResponseDTO toResponse(Review review) {
+
+        String userName = userRepository.findById(review.getUserId())
+                .map(User::getUsername)
+                .orElse("Usuário");
+
         return new ReviewResponseDTO(
-                saved.getId(),
-                saved.getPlaceId(),
-                saved.getUserId(),
-                saved.getRating(),
-                saved.getComment(),
-                saved.getCreatedAt()
+                review.getId(),
+                review.getPlaceId(),
+                review.getUserId(),
+                userName,
+                review.getRating(),
+                review.getComment(),
+                review.getCreatedAt()
         );
     }
 }
