@@ -6,9 +6,12 @@ import com.zumr.checkaccess_api.domain.User;
 import com.zumr.checkaccess_api.repository.UserRepository;
 import com.zumr.checkaccess_api.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -19,9 +22,12 @@ public class AuthService {
 
     public String register(RegisterRequestDTO dto){
 
+        log.info("Iniciando cadastro email={}", dto.getEmail());
+
         userRepository.findByEmail(dto.getEmail())
                 .ifPresent(user -> {
-                    throw new RuntimeException("Email já cadastrado");
+                    log.warn("Tentativa de cadastro com email já existente email={}", dto.getEmail());
+                    throw new IllegalArgumentException("Email já cadastrado");
                 });
 
         User user = User.builder()
@@ -32,17 +38,29 @@ public class AuthService {
 
         User saved = userRepository.save(user);
 
+        log.info("Cadastro realizado com sucesso userId={} email={}",
+                saved.getId(), saved.getEmail());
+
         return jwtService.generateToken(saved.getId());
     }
 
     public String login(LoginRequestDTO dto){
 
+        log.info("Tentativa de login email={}", dto.getEmail());
+
         User user = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> {
+                    log.warn("Falha no login email={}", dto.getEmail());
+                    return new BadCredentialsException("Email ou senha inválidos");
+                });
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())){
-            throw new RuntimeException("Senha inválida");
+            log.warn("Falha no login email={}", dto.getEmail());
+            throw new BadCredentialsException("Email ou senha inválidos");
         }
+
+        log.info("Login realizado com sucesso userId={} email={}",
+                user.getId(), user.getEmail());
 
         return jwtService.generateToken(user.getId());
     }
